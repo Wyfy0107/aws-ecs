@@ -1,0 +1,37 @@
+resource "aws_security_group" "alb" {
+  name   = "alb-sgs"
+  vpc_id = aws_vpc.ecs.id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    cidr_blocks = ["0.0.0.0/0"]
+    protocol    = "tcp"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+    protocol    = -1
+  }
+}
+
+resource "aws_security_group" "task" {
+  name   = "task-sgs"
+  vpc_id = aws_vpc.ecs.id
+
+  ingress {
+    from_port   = 5000
+    to_port     = 5000
+    cidr_blocks = ["0.0.0.0/0"]
+    protocol    = "tcp"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+    protocol    = -1
+  }
+}

@@ -22,3 +22,11 @@ variable "public_subnets_cidr" {
 variable "hosted_zone_id" {
 
 }
+
+variable "project" {
+  default = "ecs-test"
+}
+
+variable "environment" {
+  default = "dev"
+}

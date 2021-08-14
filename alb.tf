@@ -9,15 +9,21 @@ resource "aws_lb" "ecs" {
 }
 
 resource "aws_lb_target_group" "this" {
-  name        = "ecs-alb-target-group"
-  port        = 5000
-  protocol    = "HTTP"
-  target_type = "ip"
-  vpc_id      = aws_vpc.ecs.id
+  name                 = "ecs-alb"
+  protocol             = "HTTP"
+  port                 = 5000
+  target_type          = "instance"
+  vpc_id               = aws_vpc.ecs.id
+  deregistration_delay = 60
 
   health_check {
     enabled             = true
     unhealthy_threshold = 6
+    port                = "traffic-port"
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
